@@ -13,7 +13,7 @@ import tensorflow as tf
 FusedLasso(): K-NN-FL model 
 Parameters:
     k_neighbors: =5 by default. 
-    metric: ='Euclidean' by default.
+    metric: ='euclidean' by default.
 Method:
     fit(X, y, alpha)
     predict(X)
