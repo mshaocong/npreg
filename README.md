@@ -18,7 +18,7 @@ model.predict(x)
 See 'example.ipynb' for Example 2.2 in that paper.  
  
 ## N-W estimator on manifolds
-Based on [this slides](http://www.cs.unc.edu/~lazebnik/fall09/manifold_kernel_regression.pdf). For now, we can do regression on a sphere $S^2$:
+Based on [this slides](http://www.cs.unc.edu/~lazebnik/fall09/manifold_kernel_regression.pdf). For now, we can do regression on a sphere:
 ```{python}
 model = KernelRegression(dist='sphere')
 model.fit(X, y)
