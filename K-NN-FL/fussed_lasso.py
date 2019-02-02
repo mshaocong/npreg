@@ -39,21 +39,29 @@ class FusedLasso():
         #get theta
         G = graph[1]
         n = len(y)
-        manifold = Euclidean(n)
+        tf.reset_default_graph()
+        theta = tf.get_variable('theta',shape=[1,n], dtype=tf.float32)
+        Y=y.astype('float32') 
         
-        theta = tf.Variable( initial_value= np.zeros(n,dtype='float32') ) #change this initial point to a random one
-        cost = tf.reduce_sum(tf.square(y - theta)) + alpha*tf.norm(tf.tensordot(G, theta,1),ord=1)
-        problem = Problem(manifold=manifold, cost=cost, arg=theta, verbosity=verbosity)
-        solver = ConjugateGradient() 
-        Xopt = solver.solve(problem)
-        self.theta = Xopt
+        mse = tf.reduce_sum(tf.squared_difference(Y , theta))
+        penalty =  alpha*tf.norm(tf.matmul(G, theta,transpose_b=True),ord=1)
         
-        MSE = 0
-        for i in range(n):
-            MSE += manifold.dist( y[i], Xopt[i] )
-        self.MSE = MSE
-        if verbosity==1:
-            print("MSE: %0.2f" % MSE)
+        cost = mse + penalty
+        optimizer = tf.train.AdamOptimizer(0.01)
+        train = optimizer.minimize(cost) 
+        
+        cost_record = []
+        
+        with tf.Session() as sess: 
+            sess.run(tf.global_variables_initializer())
+            for i in range(100):
+                each_record = {'mse':[],'penalty':[] } 
+                each_record['mse'] = sess.run( mse )
+                each_record['penalty'] = sess.run( penalty ) 
+                cost_record.append(each_record)
+                sess.run(train)
+            self.theta = sess.run(theta).flatten() 
+        self.cost_record = cost_record
         
     def __k(self, i, x):
         #找到距离x最近的k个点，判断x_i是否在其中；在就返回1，不在就返回0
