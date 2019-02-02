@@ -16,11 +16,13 @@ model.predict(x)
 ```
 
 See 'example.ipynb' for Example 2.2 in that paper.  
-
-<Explain how it works here.>
-
+ 
 ## N-W estimator on manifolds
-Only 1-dim case.  
+Based on [this slides](http://www.cs.unc.edu/~lazebnik/fall09/manifold_kernel_regression.pdf). For now, we can do regression on a sphere $S^2$:
+```{python}
+model = KernelRegression(dist='sphere')
+model.fit(X, y)
+```
 
-## Frechet regression
-TODO.
+## Time series with correlated errors
+When choosing the best bandwith in kernel smoothing, correlated errors will lead our automated method to select a too small bandwith. A popular way to deal with this situation is Altman's method introduced in Kernel Smoothing of Data With Correlated Errors. And I also implement another method from Kernel Regression in the Presence of Correlated Errors.
