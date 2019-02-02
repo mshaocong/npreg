@@ -25,4 +25,4 @@ model.fit(X, y)
 ```
 
 ## Time series with correlated errors
-When choosing the best bandwith in kernel smoothing, correlated errors will lead our automated method to select a too small bandwith. A popular way to deal with this situation is Altman's method introduced in Kernel Smoothing of Data With Correlated Errors. And I also implement another method from Kernel Regression in the Presence of Correlated Errors.
+When choosing the best bandwith in kernel smoothing, correlated errors will lead our automated method to select a too small bandwith. A popular way to deal with this situation is Altman's method introduced in *Kernel Smoothing of Data With Correlated Errors*. And I also implement another method from *Kernel Regression in the Presence of Correlated Errors*.
